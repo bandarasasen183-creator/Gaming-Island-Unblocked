@@ -1,3 +1,5 @@
+// js/index.js
+
 import { games } from './games.js';
 
 const grid = document.getElementById('grid');
@@ -23,15 +25,22 @@ function render(list) {
     const title = node.querySelector('.title');
     const badge = node.querySelector('.badge');
 
+    // Set cover background
     cover.style.background = coverStyle(g);
+
+    // If no image, show emoji
     if (!g.thumb) {
       cover.style.display = 'grid';
       cover.style.placeItems = 'center';
       cover.style.fontSize = '48px';
       cover.textContent = g.emoji || '🎮';
     }
+
+    // Link to game
     a.href = g.href;
     a.setAttribute('aria-label', `Play ${g.title}`);
+
+    // Set title and category badge
     title.textContent = g.title;
     badge.textContent = g.category[0].toUpperCase() + g.category.slice(1);
 
@@ -43,18 +52,30 @@ function applyFilters() {
   const q = query.trim().toLowerCase();
   const filtered = games.filter(g => {
     const catOk = activeCat === 'all' || g.category === activeCat;
-    const qOk = !q || g.title.toLowerCase().includes(q) || (g.desc || '').toLowerCase().includes(q);
+    const qOk =
+      !q ||
+      g.title.toLowerCase().includes(q) ||
+      (g.desc || '').toLowerCase().includes(q);
     return catOk && qOk;
   });
   render(filtered);
 }
 
-search.addEventListener('input', e => { query = e.target.value; applyFilters(); });
-chips.forEach(btn => btn.addEventListener('click', () => {
-  chips.forEach(b => b.classList.remove('is-active'));
-  btn.classList.add('is-active');
-  activeCat = btn.dataset.cat;
+// Search input listener
+search.addEventListener('input', e => {
+  query = e.target.value;
   applyFilters();
-}));
+});
 
+// Category chip listeners
+chips.forEach(btn => {
+  btn.addEventListener('click', () => {
+    chips.forEach(b => b.classList.remove('is-active'));
+    btn.classList.add('is-active');
+    activeCat = btn.dataset.cat;
+    applyFilters();
+  });
+});
+
+// Initial render
 applyFilters();
