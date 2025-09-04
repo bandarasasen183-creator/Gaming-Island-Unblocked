@@ -1,44 +1,39 @@
-                                                                                                                            <!doctype html>
+<!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Playground — HTML5 Game Hub</title>
-  <meta name="description" content="Clean, fast HTML5 game hub. No logins, no downloads." />
+  <meta name="description" content="Clean, fast HTML5 games — no logins, no downloads." />
   <link rel="stylesheet" href="styles.css" />
   <link rel="icon" href="data:," />
 </head>
 <body>
-  <header class="shell">
+  <header class="shell header">
     <div class="brand">
       <div class="logo">🎮</div>
-      <div class="titles">
+      <div>
         <h1>Playground</h1>
         <p class="tag">Clean, fast HTML5 games — no logins, no downloads.</p>
       </div>
     </div>
-
     <div class="controls">
-      <div class="search">
-        <input id="search" type="search" placeholder="Search games…" aria-label="Search games" />
-      </div>
+      <input id="search" type="search" placeholder="Search games…" aria-label="Search games" />
       <nav class="chips" aria-label="Categories">
-        <button class="chip is-active" data-cat="all">All</button>
-        <button class="chip" data-cat="logic">Logic</button>
-        <button class="chip" data-cat="memory">Memory</button>
-        <button class="chip" data-cat="arcade">Arcade</button>
+        <button class="chip is-active" data-cat="all"><span>All</span></button>
+        <button class="chip" data-cat="logic"><span>Logic</span></button>
+        <button class="chip" data-cat="memory"><span>Memory</span></button>
+        <button class="chip" data-cat="arcade"><span>Arcade</span></button>
       </nav>
     </div>
   </header>
 
   <main class="shell">
-    <section id="grid" class="grid" aria-live="polite">
-      <!-- Cards rendered by app.js -->
-    </section>
+    <section id="grid" class="grid" aria-live="polite"></section>
   </main>
 
   <footer class="shell foot">
-    <small>Built with HTML/CSS/JS. No tracking, no ads. Source available in this repository.</small>
+    <small>No ads. No tracking. Static files only.</small>
   </footer>
 
   <template id="card-tpl">
@@ -56,6 +51,6 @@
     </article>
   </template>
 
-  <script src="app.js" type="module"></script>
+  <script type="module" src="js/index.js"></script>
 </body>
 </html>
