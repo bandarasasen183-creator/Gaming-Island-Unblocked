@@ -1,37 +1,61 @@
->!DOCT>YPE html>
->html lang="en">
->head>
-  >meta charset="UTF-8" />
-    >meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-      >title>PlayLab Ultra>/title>
-        >link rel="stylesheet" href="style.css" />
-        >/head>
-        >body>
-          >header>
-              >h1> PlayLab Ultra>/h1>
-                  >p>Instant games. No login. Just play.>/p>
-                    >/header>
+                                                                                                                            <!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Playground — HTML5 Game Hub</title>
+  <meta name="description" content="Clean, fast HTML5 game hub. No logins, no downloads." />
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="icon" href="data:," />
+</head>
+<body>
+  <header class="shell">
+    <div class="brand">
+      <div class="logo">🎮</div>
+      <div class="titles">
+        <h1>Playground</h1>
+        <p class="tag">Clean, fast HTML5 games — no logins, no downloads.</p>
+      </div>
+    </div>
 
-                      >main>
-                          >section class="game-grid">
-                                >div class="game-card">
-                                        >h2>2048>/h2>
-                                                >iframe src="https://play2048.co/" loading="lazy">>/iframe>
-                                                      >/div>
-                                                            >div class="game-card">
-                                                                    >h2>Breakout>/h2>
-                                                                            >iframe src="https://games.construct.net/2048-breakout/" loading="lazy">>/iframe>
-                                                                                  >/div>
-                                                                                        >div class="game-card">
-                                                                                                >h2>Snake>/h2>
-                                                                                                        >iframe src="https://playsnake.org/" loading="lazy">>/iframe>
-                                                                                                              >/div>
-                                                                                                                  >/section>
-                                                                                                                    >/main>
-                                                                                                                    
-                                                                                                                      >footer>
-                                                                                                                          >p>Made with curiosity by Sasen >/p>
-                                                                                                                            >/footer>
-                                                                                                                            >/body>
-                                                                                                                            >/html>
-                                                                                                                            
+    <div class="controls">
+      <div class="search">
+        <input id="search" type="search" placeholder="Search games…" aria-label="Search games" />
+      </div>
+      <nav class="chips" aria-label="Categories">
+        <button class="chip is-active" data-cat="all">All</button>
+        <button class="chip" data-cat="logic">Logic</button>
+        <button class="chip" data-cat="memory">Memory</button>
+        <button class="chip" data-cat="arcade">Arcade</button>
+      </nav>
+    </div>
+  </header>
+
+  <main class="shell">
+    <section id="grid" class="grid" aria-live="polite">
+      <!-- Cards rendered by app.js -->
+    </section>
+  </main>
+
+  <footer class="shell foot">
+    <small>Built with HTML/CSS/JS. No tracking, no ads. Source available in this repository.</small>
+  </footer>
+
+  <template id="card-tpl">
+    <article class="card">
+      <a class="thumb" href="#" aria-label="">
+        <div class="cover"></div>
+        <div class="overlay"><span>Play</span></div>
+      </a>
+      <div class="meta">
+        <h3 class="title"></h3>
+        <div class="row">
+          <span class="badge"></span>
+        </div>
+      </div>
+    </article>
+  </template>
+
+  <script src="app.js" type="module"></script>
+</body>
+</html>
