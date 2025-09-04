@@ -9,8 +9,7 @@ export const games = [
     colorB: '#6ee7ff',
     href: 'games/memory/index.html',
     desc: 'Flip and match pairs. Calm and quick.'
-  }
-];
+  },
 {
   id: 'snake',
   title: 'Snake Classic',
@@ -30,5 +29,4 @@ export const games = [
   colorB: '#6366f1',
   href: 'games/tictactoe/index.html',
   desc: 'Classic 3×3 strategy game.'
-},
-// …repeat until you have 100
+}
