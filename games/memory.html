@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Memory Match</title>
+  <link rel="stylesheet" href="../styles.css" />
+  <style>
+    body{background:var(--bg); color:var(--ink)}
+    .shell{width:min(900px,92%); margin:20px auto 40px}
+    .bar{display:flex; justify-content:space-between; align-items:center; margin:12px 0 16px}
+    .home{color:var(--ink); text-decoration:none; border:1px solid var(--stroke); padding:6px 10px; border-radius:10px}
+    .board{display:grid; grid-template-columns:repeat(4, minmax(64px,1fr)); gap:10px; margin-top:10px}
+    .card{
+      position:relative; aspect-ratio:1/1; border-radius:14px; cursor:pointer; transform-style:preserve-3d;
+      transition:transform .25s ease; border:1px solid var(--stroke); background:var(--panel)
+    }
+    .card.flip{transform:rotateY(180deg); cursor:default}
+    .face{
+      position:absolute; inset:0; display:grid; place-items:center; font-size:30px; backface-visibility:hidden; border-radius:14px
+    }
+    .front{background:linear-gradient(135deg,#2aa9ff,#6ee7ff); color:#0b0e1a}
+    .back{background:#0b0f16; transform:rotateY(180deg)}
+    .done{outline:2px solid var(--accent)}
+    .row{display:flex; gap:8px; align-items:center}
+    .btn{background:linear-gradient(180deg,#2aa9ff,#6ee7ff); color:#0b0e1a; font-weight:800; padding:8px 12px; border-radius:10px; border:none; cursor:pointer}
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <div class="bar">
+      <a class="home" href="../index.html">← Back</a>
+      <h1 style="margin:0">Memory Match</h1>
+      <button id="reset" class="btn">Reset</button>
+    </div>
+    <p class="tag">Flip two cards to find a pair. Match all pairs to win.</p>
+    <div id="board" class="board" aria-live="polite"></div>
+  </div>
+
+  <script>
+    const emojis = ['🍎','🚲','⭐','🎈','🐱','🎵','🍩','⚽'];
+    let deck = [];
+    let first = null, lock = false, matched = 0;
+
+    function newDeck() {
+      const pairs = emojis.slice(0, 8).flatMap(e => [{e},{e}]);
+      for (let i = pairs.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [pairs[i], pairs[j]] = [pairs[j], pairs[i]];
+      }
+      deck = pairs.map((p, i) => ({ id: i, e: p.e, done: false }));
+    }
+
+    function draw() {
+      const board = document.getElementById('board');
+      board.innerHTML = '';
+      deck.forEach(card => {
+        const el = document.createElement('button');
+        el.className = 'card';
+        el.setAttribute('aria-label', 'Card');
+        el.innerHTML = `
+          <div class="face front">?</div>
+          <div class="face back">${card.e}</div>
+        `;
+        el.addEventListener('click', () => onFlip(card, el));
+        board.appendChild(el);
+      });
+    }
+
+    function onFlip(card, el) {
+      if (lock || el.classList.contains('flip')) return;
+      el.classList.add('flip');
+      if (!first) { first = { card, el }; return; }
+
+      // Second flip
+      lock = true;
+      setTimeout(() => {
+        if (first.card.e === card.e && first.card.id !== card.id) {
+          // Match
+          first.el.classList.add('done'); el.classList.add('done');
+          matched += 2;
+          if (matched === deck.length) {
+            setTimeout(() => alert('Nice! All pairs matched.'), 150);
+          }
+        } else {
+          // Miss
+          first.el.classList.remove('flip'); el.classList.remove('flip');
+        }
+        first = null; lock = false;
+      }, 400);
+    }
+
+    function reset() {
+      matched = 0; first = null; lock = false; newDeck(); draw();
+    }
+
+    document.getElementById('reset').addEventListener('click', reset);
+    reset();
+  </script>
+</body>
+</html>
